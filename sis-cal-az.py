@@ -80,8 +80,7 @@ for i, j in zip(datosHojaIdentificacion, datosHojaRespuestas):
         respuestasPostulante = "" 
         
         
-
-# Sacamos nota final
+# Sacamos respuestas correctas
 respuestas_P = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 respuestas_Q = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
 respuestas_R = "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
@@ -89,17 +88,66 @@ respuestas_S = "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
 respuestas_T = "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
 rptaFijas = ""
 
+respuestasCorrectasPostu = []
+rptCorrecta = []
+
 for i in datosFinales:
-    if( datosFinales[1] == "P" ): # Tomando TP de HOJA IDENTIFICACION
-        rptaFijas = "P"
-    if( datosFinales[1] == "Q" ):
-        rptaFijas = "Q"
-    if( datosFinales[1] == "R" ):
-        rptaFijas = "R"
-    if( datosFinales[1] == "S" ):
-        rptaFijas = "S"
-    if( datosFinales[1] == "T" ):
-        rptaFijas = "T"
+    if( i[1] == "P" ): # Tomando TP de HOJA IDENTIFICACION
+        rptaFijas = respuestas_P
+    if( i[1] == "Q" ):
+        rptaFijas = respuestas_Q
+    if( i[1] == "R" ):
+        rptaFijas = respuestas_R
+    if( i[1] == "S" ):
+        rptaFijas = respuestas_S
+    if( i[1] == "T" ):
+        rptaFijas = respuestas_T
+    
+    for rPostu, rFijas in zip(i[3],rptaFijas):
+        if(rPostu == rFijas):
+            rptCorrecta.append(rPostu)
+        else:
+            rptCorrecta.append("-")
+    
+    respuestasCorrectasPostu.append(rptCorrecta)
+    rptCorrecta = []
+    
+# Sacamos nota final
+
+ponderacionIng = [[4,5.201],
+                  [4,5.202],
+                  [4,5.303],
+                  [4,5.404],
+                  [4,5.905],
+                  [4,5.406],
+                  [2,3.177],
+                  [4,3.802],
+                  [2,2.576],
+                  [2,3.701],
+                  [2,3.101],
+                  [2,3.502],
+                  [4,3.352],
+                  [2,2.501],
+                  [6,7.603],
+                  [6,7.103],
+                  [2,4.087],
+                  [2,4.087]]
+
+recorrerRptas = 0
+puntajeTotal = 0
+
+for i in ponderacionIng:
+    print("---i:",i)
+    for j in range(i[0]):
+        print("j:",j, recorrerRptas)
+        if respuestasCorrectasPostu[recorrerRptas] not in ["-"]:
+            puntaje = (10 * i[1])
+            puntajeTotal = puntajeTotal + puntaje
+            
+        recorrerRptas = recorrerRptas + 1 
+    # print(respuestasCorrectasPostu[recorrerRptas-1], puntajeTotal)
+    puntajeTotal = 0
+        
     
     
 
