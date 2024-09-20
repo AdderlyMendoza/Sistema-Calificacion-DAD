@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación con Eel</title>
+</head>
+<body>
+    <h1>Aplicación de escritorio con Python y Eel</h1>
+    
+    <!-- Input para ingresar el nombre -->
+    <input type="text" id="nombre" placeholder="Ingresa tu nombre">
+    
+    <!-- Botón para enviar el nombre -->
+    <button onclick="saludo()">Enviar</button>
+
+    <!-- JavaScript para manejar la interacción -->
+    <script type="text/javascript">
+        // Función para capturar el nombre y enviarlo a Python
+        function saludo() {
+            let nombre = document.getElementById("nombre").value;
+            console.log("Nombre ingresado: ", nombre);  // Verifica que el nombre se capture
+            eel.saludo_desde_python(nombre);  // Llama a la función Python
+        }
+    </script>
+</body>
+</html>

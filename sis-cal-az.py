@@ -65,13 +65,10 @@ for i, j in zip(datosHojaIdentificacion, datosHojaRespuestas):
                 resTipoPruebaPostulante = "error"
         else:
             resTipoPruebaPostulante = "error"
-            
         
         respuestasPostulante = j[4][7:]
         datosFinales.append([dniPostulante, idenTipoPruebaPostulante, resTipoPruebaPostulante, respuestasPostulante])
         
-        # print("DNI:", dniPostulante, ", idenTP:", idenTipoPruebaPostulante, "resTP:", resTipoPruebaPostulante,  ", RESPUESTAS:", respuestasPostulante)
-
         dniPostulante = ""
         tipoPruebaPostulante= ""
         respuestasPostulante = "" 
