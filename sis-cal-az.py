@@ -16,8 +16,7 @@ with open(archivoIdentificacion, 'r') as idenArchivo:
         idenDato03 = linea[38].strip()            
         idenDNI = linea[40:].strip()         
 
-        # Imprimir los valores extraídos
-        # print(idenIdentificacion, idenDato01, idenDato02, idenDato03, idenDNI)
+
         datosHojaIdentificacion.append([idenIdentificacion, idenDato01, idenDato02, idenDato03, idenDNI])
         
 
@@ -32,8 +31,6 @@ with open(archivoRespuestas, 'r') as resArchivo:
         resDato03 = linea[38].strip()           
         resRespuestas = linea[40:].strip()          
 
-        # Imprimir los valores extraídos
-        # print(resIdentificacion, resDato01, resDato02, resDato03, resRespuestas)
         datosHojaRespuestas.append([resIdentificacion, resDato01, resDato02, resDato03, resRespuestas])
 
 # Comparamos datos y extraemos DNI, TIPO DE PRUEBA res e iden y RESPUESTAS
@@ -103,6 +100,10 @@ for i in datosFinales:
     if( i[1] == "T" ):
         rptaFijas = respuestas_T
     
+    if( len(i[3]) < 61): # si hay menos de 60 respuestas (no marco las últimas xd)
+        for p in range(61-len(i[3])):
+            i[3] = i[3] + "-"
+    
     for rPostu, rFijas in zip(i[3],rptaFijas):
         if(rPostu == rFijas):
             rptCorrecta.append(rPostu)
@@ -134,19 +135,33 @@ ponderacionIng = [[4,5.201],
                   [2,4.087]]
 
 recorrerRptas = 0
-puntajeTotal = 0
+puntajeTotal = 0 # puntaje del postulante
+x = 0 # recorrer las respuestas del postulante
+recorrerPostulantes = 0
 
-for i in ponderacionIng:
-    print("---i:",i)
-    for j in range(i[0]):
-        print("j:",j, recorrerRptas)
-        if respuestasCorrectasPostu[recorrerRptas] not in ["-"]:
-            puntaje = (10 * i[1])
-            puntajeTotal = puntajeTotal + puntaje
+for i in respuestasCorrectasPostu:
+    for j in ponderacionIng:
+        for k in range(j[0]):
+            if i[x] is not "-":
+                puntaje = 10 * j[1]
+                puntajeTotal = puntajeTotal + puntaje 
+            x = x + 1
             
-        recorrerRptas = recorrerRptas + 1 
-    # print(respuestasCorrectasPostu[recorrerRptas-1], puntajeTotal)
+    datosFinales[recorrerPostulantes].append(puntajeTotal)
+    print(datosFinales[recorrerPostulantes])
+    x = 0 # reiniciamos
+    recorrerPostulantes = recorrerPostulantes + 1
     puntajeTotal = 0
+
+
+# Exportar a Excel
+import pandas as pd
+# Convertir el array en un DataFrame
+df = pd.DataFrame(datosFinales, columns=['DNI', 'TP. IDEN', 'TP. RES', 'RESPUESTAS', 'PUNTAJE'])
+        
+df.to_excel('reporteFinal.xlsx', index=False)
+
+    
         
     
     
