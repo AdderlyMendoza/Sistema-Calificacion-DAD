@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación con Eel</title>
+</head>
+<body>
+    <h1>Aplicación de escritorio con Python y Eel</h1>
+    
+    <!-- Input para ingresar el nombre -->
+    <input type="text" id="nombre" placeholder="Ingresa tu nombre">
+    <!-- Botón para enviar el nombre -->
+    <button onclick="saludo()">Enviar</button>
+
+    <!-- Div para mostrar el saludo -->
+    <div id="mensaje"></div>
+
+    <!-- JavaScript para manejar la interacción -->
+    <script type="text/javascript">
+        async function saludo() {
+            // Obtener el nombre del input
+            const nombre = document.getElementById('nombre').value;
+            // Llamar a la función Python a través de Eel
+            await eel.saludo_desde_python(nombre)();
+        }
+    </script>
+
+    <!-- Importar el archivo de JavaScript de Eel -->
+    <script type="text/javascript" src="/eel.js"></script>
+</body>
+</html>
